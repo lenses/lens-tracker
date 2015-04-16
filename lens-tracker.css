@@ -1,0 +1,50 @@
+:host {
+  display: inline-block;
+  width: 600px;
+  height: 300px;
+}
+
+.line-container {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	border: 1px solid #EEE;
+	z-index: -1;
+}
+
+.node {
+	position: absolute;
+	border: 1px solid #333;
+	background-color: #555;
+	border-radius: 50%;
+	width: 10px;
+	height: 10px;
+	cursor: pointer;
+}
+.input {
+	border: 2px solid red;
+}
+.data {
+	border: 2px solid blue;
+}
+.viz {
+	border: 2px solid green;
+}
+.node .name {
+  opacity: 0;
+  color: #333;
+  transition: opacity 0.2s;
+  top: 12px;
+  width: 150px;
+  display: inline-block;
+  font-size: 0.8em;
+  position: absolute;
+  left: -70px;
+  text-align: center;
+}
+
+.node:hover .name {
+	opacity: 1;
+}

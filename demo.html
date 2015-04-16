@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>lens-tracker Demo</title>
+    <script src="../webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="lens-tracker.html">
+
+    <style>
+      body {
+        font-family: sans-serif;
+        font-size: 14px;
+      }
+
+      #component {
+        display: block;
+        width: 600px;
+        height: 200px;
+      }
+
+
+      section {
+        display: inline-block;
+        margin: 8px;
+        vertical-align: top;
+        position: relative;
+        font-size: 0.8em;
+      }
+      html /deep/ input[is=core-input] {
+        border-bottom: 1px solid #E5E5E5 !important;
+      }
+
+    </style>
+
+    <script>
+      // helper function to stringify and prettify json
+      PolymerExpressions.prototype.json = function(object) {
+        return JSON.stringify(object, undefined, 2);
+      };
+    </script>
+
+  </head>
+  <body unresolved>
+    <template id="auto-bind-demo" is="auto-binding">
+
+
+
+      <section class="component">
+          <lens-tracker id="component" trackerData="{{myoutput}}" ></lens-tracker>
+      </section>
+
+      <section>
+        <label>data:</label>
+        <pre id="output">{{myoutput | json}}</pre>
+      </section>
+
+
+
+    </template>
+  </body>
+</html>

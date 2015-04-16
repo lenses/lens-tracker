@@ -1,0 +1,184 @@
+<link rel="import" href="../polymer/polymer.html"> 
+<!--
+A Thelma component for input
+
+##### Example
+
+    <lens-tracker></lens-tracker>
+
+@element lens-tracker
+@blurb A Thelma component
+@status alpha
+@author Thelma team
+@homepage http://lenses.github.io/lens-tracker
+-->
+
+<!--
+   "M"+parseInt(startX)+","+parseInt(startY)+
+                     " C"+parseInt(startX + handleOffsetX)+","+parseInt(startY)+
+                     " "+parseInt(endX - handleOffsetX)+","+parseInt(endY)+
+                     " "+parseInt(endX)+","+parseInt(endY);
+  -->
+
+<polymer-element name="lens-tracker" attributes="trackerData">
+
+  <template>
+    <link rel="stylesheet" href="lens-tracker.css">
+    <div class="tracker">
+      <template repeat="{{node in trackerData}}">
+
+<!--         <div class="node" style="top: {{node.track*20}}%; left: {{node.vpos*30}}% ">
+ -->
+            <div class="node {{node.components[0].type}}" style="top: {{node.track*50}}px; left: {{node.vpos*150}}px ">
+          <span class="name">{{node.components[0].id}}</span>
+        </div>
+      </template>
+      <svg class="line-container">
+        <template repeat="{{node in trackerData}}">
+          <template if="{{node.output[0]}}">
+
+            <path stroke="#333" fill="none"
+            d="M{{node.vpos*150}},{{node.track*50+5}} C{{node.vpos*150+45}},{{node.track*50+5}} {{node.output[0].inputNode.vpos*150-45}},{{node.output[0].inputNode.track*50+5}} {{node.output[0].inputNode.vpos*150}},{{node.output[0].inputNode.track*50+5}} ">
+
+            <text y="{{node.track*50+10}}px" x="{{node.vpos*150+10}}px">
+            {{node.components[0].id}}
+            {{node.output[0].inputNode.vpos}}
+            <text>
+              
+          
+          </template>
+          <template if="{{node.output[1]}}">
+
+            <path stroke="#333" fill="none"
+            d="M{{node.vpos*150}},{{node.track*50+5}} C{{node.vpos*150+45}},{{node.track*50+5}} {{node.output[1].inputNode.vpos*150-45}},{{node.output[1].inputNode.track*50+5}} {{node.output[1].inputNode.vpos*150}},{{node.output[1].inputNode.track*50+5}} ">
+
+            <text y="{{node.track*50+10}}px" x="{{node.vpos*150+10}}px">
+            {{node.components[0].id}}
+            {{node.output[0].inputNode.vpos}}
+            <text>
+              
+          
+          </template>
+        </template>
+      </svg>
+    </div>
+  </template>
+  <script>
+    Polymer('lens-tracker', {
+
+      trackerData: [],
+
+      ready: function () {
+
+        //var ffData = {"elements":[{"id":"lens-input-csv-0","name":"lens-input-csv","top":130,"left":20,"settingOpen":false,"url":"https://dataminingproject.googlecode.com/svn-history/r44/DataMiningApp/datasets/Iris/iris.csv"},{"id":"lens-data-crossfilter-0","name":"lens-data-crossfilter","top":150,"left":200,"transform":"translate(-20px, -20px)","settingOpen":true,"selectedLabels":["Sepal Length","Sepal Width"],"selectedRanges":[]},{"id":"lens-viz-g-scatter-bubble-0","name":"lens-viz-g-scatter-bubble","top":160,"left":420,"resizable":true,"width":490,"height":506,"transform":"translate(80px, -30px)","backgroundColor":"none","legend":false,"labelValueSelection":["Sepal Length",["Sepal Length","Sepal Width"],"Species"]}],"connections":[{"source":{"id":"lens-input-csv-0","name":"lens-input-csv"},"target":{"id":"lens-data-crossfilter-0","name":"lens-data-crossfilter","field":"input"}},{"source":{"id":"lens-data-crossfilter-0","name":"lens-data-crossfilter"},"target":{"id":"lens-viz-g-scatter-bubble-0","name":"lens-viz-g-scatter-bubble","field":"input"}}]};
+       // 
+       
+       var ffData = {"elements":[{"id":"lens-input-csv-0","name":"lens-input-csv","top":210,"left":90,"settingOpen":false,"transform":"translate(-70px, -50px)","url":"http://bl.ocks.org/mbostock/raw/7586334/cars.csv"},{"id":"lens-data-array-func-0","name":"lens-data-array-func","top":190,"left":250,"settingOpen":false,"transform":"translate(-80px, -30px)","functionName":"map","functionContent":"current['displacement round (cc)'] = Math.round(current['displacement (cc)']/50) * 50;\nreturn current;"},{"id":"lens-data-groupby-0","name":"lens-data-groupby","top":280,"left":90,"settingOpen":false,"transform":"translate(300px, -120px)","groupByColumn":"displacement round (cc)","aggrFunction":"avg","aggrFuncOnColumn":"economy (mpg)","sortValues":"none"},{"id":"lens-data-groupby-1","name":"lens-data-groupby","top":290,"left":220,"settingOpen":false,"transform":"translate(170px, -70px)","groupByColumn":"displacement round (cc)","aggrFunction":"avg","aggrFuncOnColumn":"power (hp)","sortValues":"none"},{"id":"lens-data-zip-0","name":"lens-data-zip","top":270,"left":410,"settingOpen":false,"transform":"translate(140px, -110px)","smart":false,"zipColKey0":"displacement round (cc)","zipColKey1":"displacement round (cc)","joinType":"inner"},{"id":"lens-viz-g-bar-chart-0","name":"lens-viz-g-bar-chart","top":190,"left":660,"resizable":true,"width":479,"height":407,"transform":"translate(30px, -30px)","selectedLabel":"displacement round (cc)","selectedValues":["avg of economy (mpg)","avg of power (hp)"],"orientation":"horizontal","legend":true,"showOptions":true,"labelValueSelection":["displacement round (cc)",["avg of economy (mpg)","avg of power (hp)"]],"numberPattern":""}],"connections":[{"source":{"id":"lens-input-csv-0","name":"lens-input-csv"},"target":{"id":"lens-data-array-func-0","name":"lens-data-array-func","field":"input"}},{"source":{"id":"lens-data-array-func-0","name":"lens-data-array-func"},"target":{"id":"lens-data-groupby-0","name":"lens-data-groupby","field":"input"}},{"source":{"id":"lens-data-array-func-0","name":"lens-data-array-func"},"target":{"id":"lens-data-groupby-1","name":"lens-data-groupby","field":"input"}},{"source":{"id":"lens-data-groupby-0","name":"lens-data-groupby"},"target":{"id":"lens-data-zip-0","name":"lens-data-zip","field":"input"}},{"source":{"id":"lens-data-groupby-1","name":"lens-data-groupby"},"target":{"id":"lens-data-zip-0","name":"lens-data-zip","field":"input_aux"}},{"source":{"id":"lens-data-zip-0","name":"lens-data-zip"},"target":{"id":"lens-viz-g-bar-chart-0","name":"lens-viz-g-bar-chart","field":"input"}}]};
+
+
+
+        this.trackerData = this._convertFreeformData(ffData);
+
+        console.log('this.trackerData '+this.trackerData);
+
+      },
+
+      // converts freeform data format to the current format
+      _convertFreeformData: function(ffData) {
+
+        var elements = ffData.elements,
+            connections = ffData.connections,
+            inputEls = [],
+            elementsMap = {};  //temp map for easy finding
+
+        var trackerElements = elements.map(function(el) {
+
+          var ret = {active: true, visible: true, output: []},
+              state = {},
+              component = {state: state};
+
+          component.id = el.id;
+          component.tagName = el.name;
+
+          component.type = component.tagName.split('-')[1];
+
+
+          for(var key in el) {
+            if(['id','name','top','left','settingOpen','transform'].indexOf(key)<0) {
+              state[key] = el[key];
+            }
+
+          }
+          ret.components = [component];
+
+          elementsMap[component.id] = ret;
+
+          if(component.type==='input') {
+            inputEls.push(ret);
+          }
+
+
+          return ret;
+
+
+
+        }.bind(this));
+        console.log(elementsMap);
+
+
+        connections.forEach(function(connection) {
+          console.log(connection);
+          var output = {
+            inputNodeId: connection.target.id,
+            inputNode: elementsMap[connection.target.id],  //beware, circular reference!
+            inputFeild: connection.target.field,
+            outputFeild: connection.source.field || 'output' //needed?
+          };
+          elementsMap[connection.source.id].output.push(output);
+
+
+        });
+
+
+        inputEls.forEach(function(inputEl, index) {
+
+          this._addStepsToTrack(inputEl,index, 0)
+        }.bind(this));
+
+        console.log(trackerElements);
+
+        return trackerElements;
+
+      },
+
+      _addStepsToTrack: function(inputEl, track, startPos) {
+        var step = 0;
+        var currentEl = inputEl;
+        console.log(currentEl);
+        while(currentEl) {
+          // if it already has track and step it is a merge
+          if(currentEl.track && currentEl.step) {
+            return;
+          }
+          currentEl.track = track;
+          currentEl.step = step;
+          currentEl.vpos = startPos + step;
+
+          // if there are more than one output it is a branch
+          if(currentEl.output.length>1) {
+            this._addStepsToTrack(currentEl.output[1].inputNode, track+1, step+1);
+            
+          }
+
+          step++;
+          currentEl = currentEl.output.length>0 ? currentEl.output[0].inputNode : null;
+
+
+
+        }
+      }
+
+
+    });
+  </script>
+</polymer-element>
